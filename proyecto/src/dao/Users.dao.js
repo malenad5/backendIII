@@ -3,23 +3,28 @@ import userModel from "./models/User.js";
 
 export default class Users {
     
-    get = (params) =>{
-        return userModel.find(params);
+    async get(params) {
+        return await userModel.find(params);
     }
 
-    getBy = (params) =>{
-        return userModel.findOne(params);
+    async getBy(params) {
+        return await userModel.findOne(params);
     }
 
-    save = (doc) =>{
-        return userModel.create(doc);
+    async save(doc) {
+        return await userModel.create(doc);
+    } catch (error) {
+        console.error("Error al registrar usuario:", error);
+        throw error;  
     }
 
-    update = (id,doc) =>{
-        return userModel.findByIdAndUpdate(id,{$set:doc})
+
+
+    async update(id, doc) {
+        return await userModel.findByIdAndUpdate(id, { $set: doc }, { new: true });
     }
 
-    delete = (id) =>{
-        return userModel.findByIdAndDelete(id);
+    async delete(id) {
+        return await userModel.findByIdAndDelete(id);
     }
 }

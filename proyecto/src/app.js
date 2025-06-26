@@ -2,6 +2,9 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import logger from './config/logger.js';
+import swaggerUI from "swagger-ui-express";
+import swaggerDocs from "./docs/swagger.yaml.js";
+
 
 
 import usersRouter from './routes/users.router.js';
@@ -14,6 +17,7 @@ import mocksRouter from './routes/mocks.router.js';
 const app = express();
 const PORT = process.env.PORT||8080;
 const connection = mongoose.connect("mongodb+srv://malenad954:malena@coderhousebackendi.dxyns.mongodb.net/coderHouseBackendI?retryWrites=true&w=majority&appName=coderHouseBackendI")
+
 
 
 app.use(express.json());
@@ -53,6 +57,11 @@ app.use((err, req, res, next) => {
 });
 
 
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+
+
 
 
 app.listen(PORT,()=>console.log(`Listening on ${PORT}`))
+
+export default connection;
